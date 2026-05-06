@@ -5,4 +5,4 @@ for i in range(97, 123):
     if lettre == 'q' or lettre == 'e':
         continue
     result += lettre
-print(result)
+print("{}".format(result))
