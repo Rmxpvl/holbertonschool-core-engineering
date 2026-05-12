@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 def safe_print_division(a, b):
-result = None
+    result = None
 
     try:
     result = a / b
@@ -11,4 +11,4 @@ result = None
     finally:
         print("Inside result: {}".format(result))
 
-return result
+    return result
