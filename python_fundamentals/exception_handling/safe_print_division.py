@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 def safe_print_division(a, b):
     result = None
 
@@ -9,6 +10,8 @@ def safe_print_division(a, b):
         pass
 
     finally:
-        print("{} / {} = {}".format(result))
+        print("Inside result: {}".format(result))
+
+    print("{} / {} = {}".format(a, b, result))
 
     return result
