@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 def safe_print_list_integers(my_list=[], x=0):
     count = 0
 
@@ -7,9 +8,10 @@ def safe_print_list_integers(my_list=[], x=0):
             print("{:d}".format(my_list[i]), end="")
             count += 1
 
-        except TypeError:
+        except (TypeError, ValueError):
             pass
         except IndexError:
-            break
+            pass
+
     print()
     return count
