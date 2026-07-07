@@ -8,10 +8,14 @@ async def connect_and_send(uri, message):
     async with websockets.connect(uri) as websocket:
         await websocket.send(message)
 
-        reponse = await websocket.recv()
+        response = await websocket.recv()
 
-        print(reponse)
+        return response
 
 
 if __name__ == "__main__":
-    asyncio.run(connect_and_send("ws://localhost:8765", "Hello WebSocket"))
+    result = asyncio.run(connect_and_send(
+        "ws://localhost:8765",
+        "Hello WebSocket"
+    ))
+    print(result)
