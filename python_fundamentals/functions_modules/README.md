@@ -12,6 +12,146 @@ du code en modules Python importables.
 - Manipulation de caracteres avec `ord` et `chr`
 - Import d'une variable depuis un module
 
+## Cours : fonctions et organisation en modules
+
+### Definir et appeler une fonction
+
+```python
+def add(a, b):
+    return a + b
+
+resultat = add(1, 2)   # resultat = 3
+```
+
+- `def nom(parametres):` definit une fonction. Le mot-cle `return` renvoie
+  une valeur a l'appelant et **termine** immediatement la fonction.
+- Une fonction sans `return` retourne implicitement `None`.
+- Donner des **noms explicites** aux parametres et a la fonction rend le
+  code auto-documente : `add(a, b)` est plus clair que `f(x, y)`.
+
+### `if __name__ == "__main__":`
+
+```python
+def add(a, b):
+    return a + b
+
+if __name__ == "__main__":
+    print("1 + 2 = {}".format(add(1, 2)))
+```
+
+- `__name__` est une variable **automatiquement definie** par Python :
+  - elle vaut `"__main__"` quand le fichier est **execute directement**
+    (`python3 fichier.py`) ;
+  - elle vaut le **nom du module** quand le fichier est **importe**
+    (`import fichier`).
+- Ce garde-fou permet d'avoir un fichier qui est a la fois :
+  - une **bibliotheque** de fonctions reutilisables (quand on l'importe), et
+  - un **script executable** (quand on le lance directement) —
+    sans que le code de demonstration s'execute lors de l'import.
+
+### Importer depuis un autre fichier
+
+```python
+# add_0.py
+def add(a, b):
+    return a + b
+```
+
+```python
+# add.py
+from add_0 import add
+
+print("1 + 2 = {}".format(add(1, 2)))
+```
+
+- `from module import nom` importe **un element precis** (une fonction,
+  une classe, une variable) depuis un module — ici, le fichier `add_0.py`
+  (sans l'extension `.py`) est vu comme le module `add_0`.
+- `import module` importe le **module entier** ; on accede alors a ses
+  elements via `module.nom` (ex : `import simple_add` puis
+  `simple_add.add(1, 2)`).
+
+### Regrouper plusieurs fonctions dans un module
+
+```python
+# calculator_1.py
+def add(a, b):
+    return a + b
+
+def sub(a, b):
+    return a - b
+
+def mul(a, b):
+    return a * b
+
+def div(a, b):
+    return a / b
+```
+
+```python
+# calculation.py
+from calculator_1 import add, sub, mul, div
+
+a, b = 10, 5
+print("{} + {} = {}".format(a, b, add(a, b)))
+print("{} / {} = {}".format(a, b, div(a, b)))
+```
+
+Regrouper des fonctions liees dans un meme fichier (ici, des operations
+arithmetiques) permet de les **importer ensemble** et de garder le code
+**organise par theme**.
+
+### Importer une variable
+
+```python
+# variable_load_5.py
+a = 98
+```
+
+```python
+# variable_load.py
+from variable_load_5 import a
+
+print("a = {}".format(a))
+```
+
+L'import ne se limite pas aux fonctions : on peut importer **n'importe quel
+nom defini au niveau du module** — variable, constante, classe...
+
+### Algorithmes simples sans operateurs "magiques"
+
+```python
+def pow(a, b):
+    if b < 0:
+        return 1 / pow(a, -b)
+    resultat = 1
+    for _ in range(b):
+        resultat *= a
+    return resultat
+```
+
+Reimplementer `a ** b` avec une boucle est un exercice classique pour
+s'entrainer a **traduire une definition mathematique en algorithme** :
+"`a` puissance `b`" = "multiplier `a` par lui-meme `b` fois".
+
+### Recapitulatif : organiser son code
+
+```
+module_a.py  (def f1, def f2, variable X)
+      │
+      │  import module_a
+      │  from module_a import f1, X
+      ▼
+script.py    (if __name__ == "__main__": orchestre les appels)
+```
+
+- **Module** = un fichier `.py` que l'on peut importer.
+- **Script** = un fichier `.py` que l'on execute directement, generalement
+  protege par `if __name__ == "__main__":`.
+- Un meme fichier peut jouer les deux roles.
+
+---
+
 ## Exercices et notions travaillees
 
 ### `add_0.py`

@@ -13,6 +13,103 @@ conditions, des boucles et du formatage de sortie.
 - Manipulation basique des caracteres (`chr`, codes ASCII)
 - Conversion et affichage formate (`{:02d}`, `hex`)
 
+## Cours : piloter l'execution d'un programme
+
+### Les conditions : `if` / `elif` / `else`
+
+```python
+if nombre > 0:
+    print("positif")
+elif nombre < 0:
+    print("negatif")
+else:
+    print("zero")
+```
+
+- Chaque condition est testee **dans l'ordre**. Des qu'une condition est
+  vraie, son bloc s'execute et les suivants sont ignores.
+- `elif` ("else if") permet d'enchainer plusieurs cas sans imbriquer des
+  `if` les uns dans les autres.
+- `else` est optionnel : il capture **tous les cas restants**.
+- En Python, l'**indentation** (4 espaces par convention) delimite les blocs
+  — il n'y a pas d'accolades `{}`.
+
+### La boucle `for` et `range`
+
+```python
+for i in range(10):
+    print(i)        # affiche 0, 1, 2, ..., 9
+```
+
+- `range(n)` genere les entiers de `0` a `n - 1` (n valeurs au total).
+- `range(debut, fin)` genere de `debut` a `fin - 1`.
+- `for variable in iterable:` execute le bloc une fois pour chaque element,
+  en affectant successivement chaque valeur a `variable`.
+
+### `continue` : passer a l'iteration suivante
+
+```python
+for i in range(ord('a'), ord('z') + 1):
+    lettre = chr(i)
+    if lettre in ('e', 'q'):
+        continue          # on ignore 'e' et 'q', et on passe a i+1
+    print(lettre, end="")
+```
+
+`continue` arrete immediatement l'iteration courante de la boucle et passe
+directement a la suivante, sans executer le reste du bloc pour cette
+iteration.
+
+### Caracteres et codes ASCII : `ord` et `chr`
+
+| Fonction | Role | Exemple |
+|----------|------|---------|
+| `ord(c)` | Caractere -> code numerique (ASCII/Unicode) | `ord('a')` -> `97` |
+| `chr(n)` | Code numerique -> caractere | `chr(97)` -> `'a'` |
+
+Ces deux fonctions sont inverses l'une de l'autre et permettent de
+**parcourir un intervalle de lettres** comme s'il s'agissait de nombres :
+`for i in range(ord('a'), ord('z') + 1): print(chr(i))`.
+
+### Boucles imbriquees
+
+```python
+for i in range(10):
+    for j in range(10):
+        print(i, j)
+```
+
+Une boucle `for` peut en contenir une autre : pour **chaque** valeur de la
+boucle externe, la boucle interne s'execute **entierement**. C'est la base
+de l'exploration de toutes les **paires** ou **combinaisons** possibles
+entre deux ensembles de valeurs.
+
+### Formatage de l'affichage
+
+```python
+print("{:02d}".format(5))   # "05" : entier sur 2 chiffres, complete par des 0
+print(hex(255))             # "0xff" : representation hexadecimale
+```
+
+- `"{:02d}"` est une **specification de format** : `02d` signifie "entier
+  (`d`), largeur minimale 2, complete avec des `0`".
+- `hex(n)` retourne une chaine commencant par `0x` representant `n` en base
+  16.
+
+### Gerer la virgule finale dans un affichage en serie
+
+```python
+for i in range(100):
+    print("{:02d}".format(i), end="" if i == 99 else ", ")
+```
+
+L'expression conditionnelle `valeur_si_vrai if condition else valeur_si_faux`
+permet de choisir le separateur a afficher selon qu'on est au **dernier**
+element ou non — un motif tres courant pour produire une sortie "propre"
+(`00, 01, ..., 99` sans virgule finale).
+
+---
+
 ## Exercices et notions travaillees
 
 ### `positive_or_negative.py`
