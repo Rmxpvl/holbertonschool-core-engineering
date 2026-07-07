@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 
-import websockets
 import asyncio
+import websockets
 
-async def connection_handler(websocket):
-    async for message in websocket:
+
+async def connect_and_send(uri, message):
+    async with websockets.connect(uri) as websocket:
         await websocket.send(message)
 
-async def main():
-    async with websockets.serve(connection_handler, "localhost", 8765):
-        await asyncio.Future()  # Garde le serveur actif
+        reponse = await websocket.recv()
+
+        print(reponse)
+
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(connect_and_send("ws://localhost:8765", "Hello WebSocket"))
