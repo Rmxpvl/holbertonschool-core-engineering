@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+
+<input id="message" type="text" placeholder="Message">
+<button onclick="sendMessage()">Envoyer</button>
+
+<p>Réponse : <span id="response"></span></p>
+
+<script>
+    const socket = new WebSocket("ws://localhost:8765");
+
+    socket.onopen = function() {
+        console.log("Connecté au serveur WebSocket");
+    };
+
+    socket.onmessage = function(event) {
+        document.getElementById("response").textContent = event.data;
+    };
+
+    function sendMessage() {
+        const message = document.getElementById("message").value;
+        socket.send(message);
+    }
+</script>
+
+</body>
+</html>
