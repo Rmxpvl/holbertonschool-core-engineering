@@ -24,4 +24,5 @@ async def start_server():
     async with websockets.serve(main, "localhost", 8765):
         await asyncio.Future()  # Garde le serveur actif
 
-asyncio.run(start_server())
+if __name__ == "__main__":
+    asyncio.run(start_server())
