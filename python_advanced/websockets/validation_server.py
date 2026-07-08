@@ -6,14 +6,6 @@ import sys
 import websockets
 
 async def main(connection):
-    message = await connection.recv()
-
-    response = "OK:" + message
-    
-    await connection.send(response)
-
-
-async def main(connection):
     
     async for message in connection:
 
