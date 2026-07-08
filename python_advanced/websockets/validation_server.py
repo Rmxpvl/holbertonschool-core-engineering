@@ -13,4 +13,4 @@ async def main(connection):
             await connection.send("ERR:EMPTY")
 
         else:
-            await connection.send("OK:" + message)
+            await connection.send("OK:" + clean_message)
