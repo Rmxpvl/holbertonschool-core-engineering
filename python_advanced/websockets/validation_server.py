@@ -2,18 +2,23 @@
 
 import asyncio
 import websockets
+from websockets.exceptions import ConnectionClosed
 
 async def main(connection):
-    
-    async for message in connection:
+    try:
+        async for message in connection:
 
-        clean_message = message.strip()
+            clean_message = message.strip()
 
-        if clean_message == "":
-            await connection.send("ERR:EMPTY")
+            if clean_message == "":
+                await connection.send("ERR:EMPTY")
 
-        else:
-            await connection.send("OK:" + clean_message)
+            else:
+                await connection.send("OK:" + clean_message)
+
+    except ConnectionClosed:
+        pass
+
 
 async def start_server():
     async with websockets.serve(main, "localhost", 8765):
