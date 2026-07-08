@@ -14,3 +14,9 @@ async def main(connection):
 
         else:
             await connection.send("OK:" + clean_message)
+
+async def start_server():
+    async with websockets.serve(main, "localhost", 8765):
+        await asyncio.Future()  # Garde le serveur actif
+
+asyncio.run(start_server())
