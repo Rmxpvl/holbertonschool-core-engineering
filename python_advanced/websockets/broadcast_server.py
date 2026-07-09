@@ -7,6 +7,7 @@ clients = set()
 
 async def connection_handler(websocket):
 
+
     clients.add(websocket)
 
     try:
@@ -15,6 +16,7 @@ async def connection_handler(websocket):
                 await client.send("B:" + message)
     finally:
         clients.remove(websocket)
+
 
 async def main():
 
