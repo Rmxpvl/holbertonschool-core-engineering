@@ -5,8 +5,8 @@ import websockets
 
 clients = set()
 
-async def connection_handler(websocket):
 
+async def connection_handler(websocket):
 
     clients.add(websocket)
 
@@ -19,7 +19,6 @@ async def connection_handler(websocket):
 
 
 async def main():
-
     async with websockets.serve(connection_handler, "localhost", 8765):
         await asyncio.Future()
 
